@@ -5,6 +5,15 @@ const Statistics = (props) => {
   const average = (props.good - props.bad)/props.totalFeedback
   // calculate the percentage of positive feedback
   const positive = (props.good/props.totalFeedback)*100
+  
+  // if no feedback has been given then don't show anything
+  if  (props.totalFeedback === 0){
+    return (
+      <div>
+        <p>No feedback given</p>
+      </div>
+    )
+  }
   return (
     <div>
       <p>good {props.good}</p>
