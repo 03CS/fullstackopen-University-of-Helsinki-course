@@ -1,87 +1,34 @@
 import { useState } from 'react'
 
-const Statistics = (props) => {
-  // calculate the average feedback score
-  const average = (props.good - props.bad)/props.totalFeedback
-  // calculate the percentage of positive feedback
-  const positive = (props.good/props.totalFeedback)*100
-  
-  // if no feedback has been given then don't show anything
-  if  (props.totalFeedback === 0){
-    return (
-      <div>
-        <p>No feedback given</p>
-      </div>
-    )
-  }
-  return (
-      <table>
-        <tbody>
-          <StatisticLine text='good' value={props.good}/>
-          <StatisticLine text='neutral' value={props.neutral}/>
-          <StatisticLine text='bad' value={props.bad}/>
-          <StatisticLine text='all' value={props.totalFeedback}/>
-          <StatisticLine text='average' value={average}/>
-          <StatisticLine text='positive%' value={positive}/>
-        </tbody>
-      </table>
-  )
-}
-
-const StatisticLine = (props) => (
-  <tr>
-    <td>{props.text}</td>
-    <td>{props.value}</td>
-  </tr>
-)
-
-const Button = (props) => (
-  <button onClick={props.onClick}>
-    {props.text}
-  </button>
-)
-
 const App = () => {
-  // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  // keep a total of all button presses
-  const [totalFeedback, setTotal] = useState(0)
-
-  const addGood = newGood => {
-    console.log('good', newGood)
-    setGood(newGood)
-    setTotal(addTotal)
-  }
-
-  const addNeutral = newNeutral => {
-    console.log('neutral', newNeutral)
-    setNeutral(newNeutral)
-    setTotal(addTotal)
-  }
-
-  const addBad = newBad => {
-    console.log('bad', newBad)
-    setBad(newBad)
-    setTotal(addTotal)
-  }
-
-  const addTotal = newTotal => {
-    console.log('total', newTotal)
-    setTotal(newTotal + 1)
+  const anecdotes = [
+    'If it hurts, do it more often.',
+    'Adding manpower to a late software project makes it later!',
+    'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+    'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+    'Premature optimization is the root of all evil.',
+    'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.',
+    'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
+    'The only way to go fast, is to go well.'
+  ]
+   
+  const [selected, setSelected] = useState(0)
+  
+  const maxValue = anecdotes.length
+  
+  const anecdoteSelection = newAncedote => {
+    console.log(newAncedote)
+    setSelected(newAncedote)
   }
 
   return (
     <div>
-      <h1>give feedback</h1>
-      <Button onClick={() => addGood(good + 1)} text='good'/>
-      <Button onClick={() => addNeutral(neutral + 1)} text='neutral'/>
-      <Button onClick={() => addBad(bad + 1)} text='bad'/>
-
-      <h1>statistics</h1>
-      <Statistics good={good} neutral={neutral} bad={bad} totalFeedback={totalFeedback}/>
-      <p></p>
+      <p>
+        {anecdotes[selected]}
+      </p>
+      <p>
+        <button onClick={() => anecdoteSelection(Math.floor(Math.random() * maxValue))}>next ancedote</button>
+      </p>
     </div>
   )
 }
