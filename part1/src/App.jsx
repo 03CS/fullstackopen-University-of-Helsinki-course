@@ -7,6 +7,17 @@ const randomNumber = (props) => {
   )
 }
 
+const mostVotes = (votes) => {
+  let mostVotedIndex = 0
+
+  for (let i = 1; i < votes.length; i++) {
+    if (votes[i] > votes[mostVotedIndex]) {
+      mostVotedIndex = i
+    }
+  }
+  return mostVotedIndex
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -23,6 +34,7 @@ const App = () => {
 
   const [selected, setSelected] = useState(0)
   const [votes, setVote] = useState(Array(maxValue).fill(0))
+  const [mostVoted, setMostVoted] = useState(0)
 
   const anecdoteSelection = newAncedote => {
     console.log(newAncedote)
@@ -34,10 +46,14 @@ const App = () => {
     copyVotes[newVote] += 1
     console.log(copyVotes)
     setVote(copyVotes)
+    setMostVoted(mostVotes(copyVotes))
   }
 
   return (
     <div>
+      <h1>
+        Ancedote of the day
+      </h1>
       <p>
         {anecdotes[selected]}
       </p>
@@ -47,6 +63,15 @@ const App = () => {
       <p>
         <button onClick={() => anecdoteVote(selected)}>vote</button>
         <button onClick={() => anecdoteSelection(randomNumber(maxValue))}>next ancedote</button>
+      </p>
+      <h1>
+        Ancedote with most votes
+      </h1>
+      <p>
+        {anecdotes[mostVoted]}
+      </p>
+      <p>
+        has {votes[mostVoted]} votes
       </p>
     </div>
   )
