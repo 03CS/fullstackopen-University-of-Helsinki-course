@@ -18,18 +18,18 @@ const Part = (props) => (
 const Total = (props) => <p>Number of exercises {props.total}</p>
 
 const Course = (props) => {
-  const length = props.course.parts.length
-  let sum = 0
-  for (let i = 0; i < length; i++){
-    sum += props.course.parts[i].exercises
-  }
+  const parts = props.course.parts
+  const total = parts.reduce((acc, part) => {
+    console.log('Reduce functionality', acc, part)
+    return acc += part.exercises
+  }, 0)
 
   return (
     <div>
       <Header course={props.course.name} />
       <Content course={props.course.parts} />
       <p>
-        total of {sum} exercises
+        total of {total} exercises
       </p>
     </div>
   )
